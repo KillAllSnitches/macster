@@ -33,6 +33,7 @@ def main():
     print("""
         [""" + cyan + """1""" + reset + """] Mac Spoofer
         [""" + cyan + """2""" + reset + """] Mac Checker
+        [""" + cyan + """3""" + reset + """] Exit
         
         """)
     mode = input('Mode: ')
@@ -41,7 +42,7 @@ def main():
     elif mode == '2':
         check()
     elif mode == '3':
-        list()
+        quit
     else:
         logo()
         print("Error!")
