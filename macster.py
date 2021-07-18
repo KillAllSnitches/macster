@@ -1,10 +1,15 @@
 import os, time
+from colorama import init
+from colorama import Style as s
+from colorama import Fore as c
+import ctypes
+cyan = c.LIGHTCYAN_EX
+reset = s.RESET_ALL
+bright = s.BRIGHT
+init(convert=True)
 def initialize():
     clear()
     reqs()
-from colorama import init, Style, Fore
-import ctypes
-init(convert=True)
 def clear():
     if os.name == 'nt':
         os.system('cls')
@@ -14,7 +19,7 @@ def logo():
     clear()
     os.system('mode con: cols=80 lines=40')
     ctypes.windll.kernel32.SetConsoleTitleW("MACSTER | vx#1234")
-    print(Style.BRIGHT, Fore.LIGHTCYAN_EX + """         
+    print(bright, cyan + """         
             ███╗   ███╗ █████╗  ██████╗███████╗████████╗███████╗██████╗ 
             ████╗ ████║██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
             ██╔████╔██║███████║██║     ███████╗   ██║   █████╗  ██████╔╝
@@ -22,17 +27,17 @@ def logo():
             ██║ ╚═╝ ██║██║  ██║╚██████╗███████║   ██║   ███████╗██║  ██║
             ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
                             github.com/vx-dev/macster
-                                                            """ + Style.RESET_ALL)
+                                                            """ + reset)
 def main():
     logo()
     print("""
-        [""" + Fore.LIGHTCYAN_EX + """1""" + Style.RESET_ALL + """] Mac Spoofer
-        [""" + Fore.LIGHTCYAN_EX + """2""" + Style.RESET_ALL + """] Mac Checker
+        [""" + cyan + """1""" + reset + """] Mac Spoofer
+        [""" + cyan + """2""" + reset + """] Mac Checker
         
         """)
     mode = input('Mode: ')
     if mode == '1':
-        spoof()
+        spoofmenu()
     elif mode == '2':
         check()
     elif mode == '3':
@@ -67,8 +72,8 @@ def reqs():
 def spoofmenu():
     logo()
     print("""
-        [""" + Fore.LIGHTCYAN_EX + """1""" + Style.RESET_ALL + """] Custom Mac Address
-        [""" + Fore.LIGHTCYAN_EX + """2""" + Style.RESET_ALL + """] Preset Mac Address
+        [""" + cyan + """1""" + reset + """] Custom Mac Address
+        [""" + cyan + """2""" + reset + """] Preset Mac Address
 
         """)
     mode = input('Mode: ')
@@ -96,11 +101,11 @@ def customspoof():
 def presetspoof():
     logo()
     print("""
-        [""" + Fore.LIGHTCYAN_EX + """1""" + Style.RESET_ALL + """] 64:b5:c6:23:d4:fa
-        [""" + Fore.LIGHTCYAN_EX + """2""" + Style.RESET_ALL + """] 00:50:c2:8c:dd:38
-        [""" + Fore.LIGHTCYAN_EX + """3""" + Style.RESET_ALL + """] b0:fd:0b:4c:30:bc
-        [""" + Fore.LIGHTCYAN_EX + """4""" + Style.RESET_ALL + """] 10:0d:7f:ed:1c:78
-        [""" + Fore.LIGHTCYAN_EX + """5""" + Style.RESET_ALL + """] f4:62:d0:7e:05:72
+        [""" + cyan + """1""" + reset + """] 64:b5:c6:23:d4:fa
+        [""" + cyan + """2""" + reset + """] 00:50:c2:8c:dd:38
+        [""" + cyan + """3""" + reset + """] b0:fd:0b:4c:30:bc
+        [""" + cyan + """4""" + reset + """] 10:0d:7f:ed:1c:78
+        [""" + cyan + """5""" + reset + """] f4:62:d0:7e:05:72
     
         """)
     choice = input('')
