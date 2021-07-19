@@ -3,7 +3,13 @@ from colorama import init
 from colorama import Style as s
 from colorama import Fore as c
 import ctypes
+import requests
+import json
+
+from requests.models import Response
 cyan = c.LIGHTCYAN_EX
+orange = c.YELLOW
+red = c.RED
 reset = s.RESET_ALL
 bright = s.BRIGHT
 init(convert=True)
@@ -33,7 +39,8 @@ def main():
     print("""
         [""" + cyan + """1""" + reset + """] Mac Spoofer
         [""" + cyan + """2""" + reset + """] Mac Checker
-        [""" + cyan + """3""" + reset + """] Exit
+        [""" + cyan + """3""" + reset + """] Mac Lookup
+        [""" + cyan + """4""" + reset + """] Exit
         
         """)
     mode = input('Mode: ')
@@ -42,7 +49,10 @@ def main():
     elif mode == '2':
         check()
     elif mode == '3':
-        quit
+        lookup()
+    elif mode == '4':
+        os.system('cls')
+        exit
     else:
         logo()
         print("Error!")
@@ -57,7 +67,8 @@ def check():
         time.sleep(5)
         main()
     except:
-        print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
+        logo()
+        print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device.")
         time.sleep(5)
         main()
 def reqs():
@@ -69,6 +80,70 @@ def reqs():
     """)
     time.sleep(5)
     main()
+
+def lookup():
+    logo()
+    print('Enter MAC Address')
+    mac = input('')
+    url = "https://mac-address-lookup1.p.rapidapi.com/static_rapid/mac_lookup/"
+
+    querystring = {"query":"18:93:d7:3e:1d:ad"}
+
+    headers = {
+    'x-rapidapi-key': "871a5edf01msh02dee63a8bb4f38p108c2ajsn65e747eb0d08",
+    'x-rapidapi-host': "mac-address-lookup1.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    r = response.json()
+    if response.text == '{\"message\":\"You have exceeded the rate limit per second for your plan, BASIC, by the API provider\"}':
+        logo()
+        print(orange, "You're being rate limited!", reset)
+        time.sleep(1.3)
+        lookup()
+    elif response.text == '{"message":"You have exceeded the DAILY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/softrix-technologies-dnschecker\/api\/mac-address-lookup1"}':
+        logo()
+        print(red, "Current api key is locked for 24h, try again with a different key & ip address!", reset)
+        lookup1()
+    else:
+        logo()
+        print("MAC Address: "+mac)
+        for i in 'name', 'address':
+            print(f"{i.capitalize()}:{r['result'][0][i]}")
+def lookup1():
+    logo()
+    print('Enter MAC Address')
+    mac = input('')
+    url = "https://mac-address-lookup1.p.rapidapi.com/static_rapid/mac_lookup/"
+
+    querystring = {"query":"18:93:d7:3e:1d:ad"}
+
+    headers = {
+    'x-rapidapi-key': "c25faacaaamsh53b22411edd67e9p199c6bjsn387094dd33c1",
+    'x-rapidapi-host': "mac-address-lookup1.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    r = response.json()
+    if response.text == '{\"message\":\"You have exceeded the rate limit per second for your plan, BASIC, by the API provider\"}':
+        logo()
+        print(orange, "You're being rate limited!", reset)
+        time.sleep(1.3)
+        lookup()
+    elif response.text == '{"message":"You have exceeded the DAILY quota for Requests on your current plan, BASIC. Upgrade your plan at https:\/\/rapidapi.com\/softrix-technologies-dnschecker\/api\/mac-address-lookup1"}':
+        logo()
+        print(red, "All keys are locked, try again later.", reset)
+        time.sleep(3)
+        main()
+    else:
+        logo()
+        print("MAC Address: "+mac)
+        for i in 'name', 'address':
+            print(f"{i.capitalize()}:{r['result'][0][i]}")
+
+    
+    
+    
 
 def spoofmenu():
     logo()
