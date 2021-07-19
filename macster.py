@@ -1,29 +1,38 @@
 import os, time
-from colorama import init
-from colorama import Style as s
-from colorama import Fore as c
+from colorama import init, Style, Fore
 import ctypes
 import requests
 import json
-
-from requests.models import Response
-cyan = c.LIGHTCYAN_EX
-orange = c.YELLOW
-red = c.RED
-reset = s.RESET_ALL
-bright = s.BRIGHT
-init(convert=True)
+cyan = Fore.LIGHTCYAN_EX
+orange = Fore.YELLOW
+red = Fore.RED
+green = Fore.GREEN
+reset = Style.RESET_ALL
+bright = Style.BRIGHT
+off = 'adb shell "su -c \'busybox ifconfig wlan0 down;\'"'
+on = 'adb shell "su -c \'busybox ifconfig wlan0 up;\'"'
+one = 'adb shell "su -c \'busybox ifconfig wlan0 hw ether '
+two ='\'\"'
+cmd = os.system
+init()
 def initialize():
-    clear()
-    reqs()
+    cmd('echo off')
+    logo()
+    print(green, 'Checking if ADB Daemon is Running...')
+    time.sleep(0.3)
+    cmd('adb start-server')
+    logo()
+    print(green, 'ADB Daemon Running!')
+    time.sleep(0.5)
+    main()
 def clear():
     if os.name == 'nt':
-        os.system('cls')
+        cmd('cls')
     else:
-        os.system('clear')
+        cmd('clear')
 def logo():
     clear()
-    os.system('mode con: cols=80 lines=40')
+    cmd('mode con: cols=80 lines=40')
     ctypes.windll.kernel32.SetConsoleTitleW("MACSTER | vx#1234")
     print(bright, cyan + """         
             ███╗   ███╗ █████╗  ██████╗███████╗████████╗███████╗██████╗ 
@@ -34,6 +43,11 @@ def logo():
             ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
                             github.com/vx-dev/macster
                                                             """ + reset)
+def error():
+    logo()
+    print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
+    time.sleep(5)
+    main()
 def main():
     logo()
     print("""
@@ -51,7 +65,14 @@ def main():
     elif mode == '3':
         lookup()
     elif mode == '4':
-        os.system('cls')
+        logo()
+        print(red, 'Stopping ADB Daemon...')
+        cmd('adb kill-server')
+        time.sleep(0.3)
+        logo()
+        print(red, 'ADB Daemon Stopped!')
+        time.sleep(0.5)
+        cmd('cls')
         exit
     else:
         logo()
@@ -61,26 +82,13 @@ def main():
 def check():
     try:
         logo()
-        os.system('adb shell "su -c \'busybox iplink show wlan0\'"')
+        cmd('adb shell "su -c \'busybox iplink show wlan0\'"')
         print("""
         the first address is your phone\'s current mac address""")
         time.sleep(5)
         main()
     except:
-        logo()
-        print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device.")
-        time.sleep(5)
-        main()
-def reqs():
-    logo()
-    print("""
-    You Must Have the Following Installed to Use Macster
-    - ADB (Android Platform Tools)
-    - Rooted Android Device with BusyBox
-    """)
-    time.sleep(5)
-    main()
-
+        error()
 def lookup():
     logo()
     print('Enter MAC Address')
@@ -140,11 +148,6 @@ def lookup1():
         print("MAC Address: "+mac)
         for i in 'name', 'address':
             print(f"{i.capitalize()}:{r['result'][0][i]}")
-
-    
-    
-    
-
 def spoofmenu():
     logo()
     print("""
@@ -161,10 +164,9 @@ def customspoof():
     try:
         logo()
         mac = input('Mac Address: ')
-        os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-        os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-        os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
-        clear()
+        cmd(on)
+        cmd(one+mac+two)
+        cmd(off)
         logo()
         print("Spoofing Finished!")
         print("your device might not display the proper mac address if you're unsure run the mac address checker")
@@ -188,76 +190,65 @@ def presetspoof():
     if choice == '1':
         try:
             mac = "64:b5:c6:23:d4:fa"
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
-            logo()
+            cmd(off)
+            cmd(one+mac+two)
+            cmd(on)
             print("Spoofing Finished!")
             print("your device might not display the proper mac address if you're unsure run the mac address checker")
             time.sleep(3)
             main()
-        except:
-            print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
-            time.sleep(5)
-            main()
+        except():
+            error()
     elif choice == '2':
         try:
             mac = "00:50:c2:8c:dd:38"
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
+            cmd(off)
+            cmd(one+mac+two)
+            cmd(on)
             logo()
             print("Spoofing Finished!")
             print("your device might not display the proper mac address if you're unsure run the mac address checker")
             time.sleep(3)
             main()
         except:
-            print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
-            time.sleep(5)
-            main()
+            error()
     elif choice == '3':
         try:
             mac = "f4:62:d0:7e:05:72"
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
+            cmd(on)
+            cmd(one+mac+two)
+            cmd(off)
             logo()
             print("Spoofing Finished!")
             print("your device might not display the proper mac address if you're unsure run the mac address checker")
             time.sleep(3)
             main()
         except:
-            print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
-            time.sleep(5)
-            main()
+            error()
     elif choice == '4':
         try:
             mac = "70:b3:d5:aa:e6:95"
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
+            cmd(on)
+            cmd(one+mac+two)
+            cmd(off)
             logo()
             print("Spoofing Finished!")
             print("your device might not display the proper mac address if you're unsure run the mac address checker")
             time.sleep(3)
             main()
         except:
-            print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
-            time.sleep(5)
-            main()
+            error()
     elif choice == '5':
         try:
             mac = "00:19:f0:dc:70:d0"
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 down;\'"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 hw ether '+mac+'\'\"')
-            os.system('adb shell "su -c \'busybox ifconfig wlan0 up;\'"')
+            cmd(on)
+            cmd(one+mac+two)
+            cmd(off)
             logo()
             print("Spoofing Finished!")
             print("your device might not display the proper mac address if you're unsure run the mac address checker")
             time.sleep(3)
             main()
         except:
-            print("An error has occured, please ensure that you have ADB installed on your computer & BusyBox installed on your android device")
-            time.sleep(5)
-            main()
+            error()
 initialize()
