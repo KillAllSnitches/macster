@@ -95,7 +95,7 @@ def lookup():
     mac = input('')
     url = "https://mac-address-lookup1.p.rapidapi.com/static_rapid/mac_lookup/"
 
-    querystring = {"query":"18:93:d7:3e:1d:ad"}
+    querystring = {"query":mac}
 
     headers = {
     'x-rapidapi-key': "871a5edf01msh02dee63a8bb4f38p108c2ajsn65e747eb0d08",
@@ -129,7 +129,7 @@ def lookup1():
     mac = input('')
     url = "https://mac-address-lookup1.p.rapidapi.com/static_rapid/mac_lookup/"
 
-    querystring = {"query":"18:93:d7:3e:1d:ad"}
+    querystring = {"query":mac}
 
     headers = {
     'x-rapidapi-key': "c25faacaaamsh53b22411edd67e9p199c6bjsn387094dd33c1",
@@ -192,7 +192,7 @@ def presetspoof():
         [""" + cyan + """1""" + reset + """] 64:b5:c6:23:d4:fa
         [""" + cyan + """2""" + reset + """] 00:50:c2:8c:dd:38
         [""" + cyan + """3""" + reset + """] b0:fd:0b:4c:30:bc
-        [""" + cyan + """4""" + reset + """] 10:0d:7f:ed:1c:78
+        [""" + cyan + """4""" + reset + """] 70:b3:d5:aa:e6:95
         [""" + cyan + """5""" + reset + """] f4:62:d0:7e:05:72
     
         """)
@@ -224,7 +224,7 @@ def presetspoof():
             error()
     elif choice == '3':
         try:
-            mac = "f4:62:d0:7e:05:72"
+            mac = "b0:fd:0b:4c:30:bc"
             cmd(on)
             cmd(one+mac+two)
             cmd(off)
@@ -250,7 +250,7 @@ def presetspoof():
             error()
     elif choice == '5':
         try:
-            mac = "00:19:f0:dc:70:d0"
+            mac = "f4:62:d0:7e:05:72"
             cmd(on)
             cmd(one+mac+two)
             cmd(off)
@@ -287,78 +287,78 @@ def autospoof():
         cmd(one+mac1+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac2+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac3+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac4+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac5+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac6+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac7+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac8+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac9+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac10+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac11+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac12+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac13+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac14+two)
         cmd(on)
         print(green, spoofed)
-        time.sleep(900)
+        time.sleep(4.8)
         cmd(off)
         cmd(one+mac15+two)
         cmd(on)
         print(green, spoofed)
         print(orange, loopend)
-        time.sleep(900)
+        time.sleep(4.8)
         autospoof()
     except:
         cmd(on)
